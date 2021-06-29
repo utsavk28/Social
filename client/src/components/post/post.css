@@ -1,0 +1,190 @@
+.post-form {
+    position: relative;
+
+    margin: 8px 0;
+    padding: 16px;
+    box-shadow: 4px 4px 16px #dfe2ef;
+    border-radius: 8px;
+}
+
+.post {
+    position: relative;
+    margin: 8px 0;
+    padding: 16px;
+    box-shadow: 4px 4px 16px #dfe2ef;
+    border-radius: 8px;
+}
+
+.post-headline {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.option-icon {
+    position: absolute;
+    right: 0%;
+    top: 1%;
+}
+
+.option-div {
+    position: absolute;
+    right: 0%;
+    top: 40px;
+    padding: 16px;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px #b1b1b1;
+}
+
+.profile-user-details {
+    margin: 2px 16px;
+    line-height: 100%;
+}
+
+.post-content {
+    padding: 0px 4px 0px 42px;
+    margin: 4px 4px 8px 30px;
+    border-left: 2px solid rgb(167, 167, 167);
+}
+
+.post-content-img {
+    max-width: 800px;
+    max-height: 800px;
+}
+
+.post-content-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: none;
+}
+
+.post-form-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.post-form-form {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin: 8px 12px;
+}
+
+.post-form-form > * {
+    margin: 0 4px;
+    height: 40px;
+}
+
+.post-form-form > .post-file {
+    margin-top: 8px;
+}
+
+.profile-img-post {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.profile-img-post > img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #dfe2ef;
+    object-fit: cover;
+}
+
+.preview-post {
+    margin: 24px;
+}
+
+.post-interaction {
+    margin: 8px 8px 4px 60px;
+}
+
+.like-btn {
+    width: 32px;
+}
+
+.comment-btn {
+    width: 26px;
+}
+
+.comment-form {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 4px;
+}
+
+.comment-form > * {
+    margin: 0 4px;
+}
+
+.comment-form > input {
+    flex: 1;
+}
+
+.post-container {
+    margin: auto;
+}
+
+.comments-tab {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.comment {
+    display: flex;
+    position: relative;
+}
+
+.comment-headline {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.comment-headline > h5 {
+    padding: 8px;
+}
+
+.profile-img-comment > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid #dfe2ef;
+    object-fit: cover;
+}
+
+.comment-content {
+    padding: 8px;
+}
+
+.delete-btn {
+    position: absolute;
+    right: 0;
+    padding: 4px;
+}
+
+.delete-btn > img {
+    width: 20px;
+}
+
+
+.edit-icon {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+}
+
+.edit-icon img {
+    width: 24px;
+}
+
+
+
+@media screen and (max-width: 600px) {
+    .post-interaction {
+        margin: 2px;
+    }
+}
