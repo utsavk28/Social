@@ -43,5 +43,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://social-v2-app.herokuapp.com/"
+  "proxy": "https://social-v1-app.herokuapp.com"
 }

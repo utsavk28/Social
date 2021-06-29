@@ -1,2 +1,2 @@
-const url = 'https://social-v2-app.herokuapp.com';
-export default url
+const url = 'https://social-v1-app.herokuapp.com';
+export default url;
