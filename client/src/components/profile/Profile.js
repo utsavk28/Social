@@ -25,25 +25,21 @@ const Profile = ({ match }) => {
 
     return (
         <div className='container-md mt-4'>
-            {loading && !profile ? (
+            {loading || !profile || !currProfile ? (
                 <Loader />
             ) : match.path.split('/')[3] === 'update' ? (
-                profile && (
-                    <ProfileForm
+                <ProfileForm
+                    profile={profile}
+                    currUsername={currProfile.user.username}
+                />
+            ) : (
+                <Fragment>
+                    <DetailCard
                         profile={profile}
                         currUsername={currProfile.user.username}
                     />
-                )
-            ) : (
-                profile && (
-                    <Fragment>
-                        <DetailCard
-                            profile={profile}
-                            currUsername={currProfile.user.username}
-                        />
-                        <PostContainer />
-                    </Fragment>
-                )
+                    <PostContainer />
+                </Fragment>
             )}
         </div>
     );

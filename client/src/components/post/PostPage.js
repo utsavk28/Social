@@ -13,9 +13,10 @@ const PostPage = ({ match }) => {
         dispatch(getPostById(match.params.post));
     }, [dispatch, match.params.post]);
 
+
     return (
         <div className='container-lg my-4 mx-auto'>
-            <Post post={post} onPostPage={true} />
+            {Object.keys(post).length && <Post post={post} onPostPage={true} />}
         </div>
     );
 };

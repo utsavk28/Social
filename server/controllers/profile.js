@@ -77,15 +77,15 @@ export const updateProfile = async (req, res) => {
                 d: 'mm',
             });
 
-            profile = new Profile({
+            const newProfile = new Profile({
                 user: req.user.id,
-                bio,
-                DOB,
+                bio:bio && bio,
+                DOB: DOB && DOB,
                 name,
                 profileImg: profileImg ? profileImg : avatar,
             });
-            await profile.save();
-            return res.json({ profile, msg: 'Profile Created' });
+            await newProfile.save();
+            return res.json({ profile:newProfile, msg: 'Profile Created' });
         }
 
         profile = await Profile.findOneAndUpdate(

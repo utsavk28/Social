@@ -58,7 +58,7 @@ export const register =
             dispatch(loadUser());
 
             const profileRes = await axios.post(
-                '/api/profile',
+                `${url}/api/profile`,
                 profileBody,
                 config
             );
@@ -68,6 +68,7 @@ export const register =
                 payload: profileRes.data.profile,
             });
         } catch (error) {
+            console.log(error);
             const errors = error.response.data.errors;
 
             if (errors) {

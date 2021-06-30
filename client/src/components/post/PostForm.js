@@ -36,12 +36,10 @@ const PostForm = () => {
                 [e.target.name]: e.target.value,
             });
         }
-        console.log(formData);
     };
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
         dispatch(postPost(formData));
         setFormData({
             text: '',

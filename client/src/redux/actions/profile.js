@@ -17,13 +17,7 @@ export const getProfile = (username) => async (dispatch) => {
             payload: res.data,
         });
     } catch (error) {
-        const errors = error.response.data.errors;
-
-        if (errors) {
-            errors.forEach((err) => {
-                dispatch(setAlert(err.msg, 'danger'));
-            });
-        }
+        console.log(error);
         dispatch({
             type: PROFILE_ERROR,
         });
@@ -40,13 +34,7 @@ export const getCurrProfile = () => async (dispatch) => {
         });
     } catch (error) {
         console.log(error);
-        const errors = error.response.data.errors;
-        
-        if (errors) {
-            errors.forEach((err) => {
-                dispatch(setAlert(err.msg, 'danger'));
-            });
-        }
+
         dispatch({
             type: PROFILE_ERROR,
         });
