@@ -76,7 +76,7 @@
     height: 40px;
 }
 
-.post-form-form > .post-file {
+.post-form-form  .post-file {
     margin-top: 8px;
 }
 
@@ -86,7 +86,7 @@
     border-radius: 50%;
 }
 
-.profile-img-post > img {
+.profile-img-post  img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -132,7 +132,7 @@
     margin: 0 4px;
 }
 
-.comment-form > input {
+.comment-form  input {
     flex: 1;
 }
 
@@ -155,11 +155,11 @@
     flex-wrap: wrap;
 }
 
-.comment-headline > h5 {
+.comment-headline h5 {
     padding: 8px;
 }
 
-.profile-img-comment > img {
+.profile-img-comment img {
     width: 40px;
     height: 40px;
     border-radius: 50%;

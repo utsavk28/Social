@@ -17,12 +17,16 @@ const ProfileCard = ({ profile, currUsername, currProfile }) => {
     return (
         <div className='profile-item-details-card'>
             <div className='profile-img-post'>
-                <img src={profileImg} alt='profile-img' />
+                <Link to={`/u/${username}`} className='remove-link-style'>
+                    <img src={profileImg} alt='profile-img' />
+                </Link>
             </div>
             <div className='profile-content'>
                 <h5>{name}</h5>
                 <div className='profile-content-details'>
-                    <p className='username'>{username}</p>
+                    <Link to={`/u/${username}`} className='remove-link-style'>
+                        <p className='username'>{username}</p>
+                    </Link>
                 </div>
             </div>
             {username !== currUsername && (
@@ -34,7 +38,7 @@ const ProfileCard = ({ profile, currUsername, currProfile }) => {
                                 dispatch(
                                     unfollowUser({
                                         id: userId,
-                                        username:currUsername,
+                                        username: currUsername,
                                     })
                                 );
                             }}
@@ -48,7 +52,7 @@ const ProfileCard = ({ profile, currUsername, currProfile }) => {
                                 dispatch(
                                     followUser({
                                         id: userId,
-                                        username:currUsername,
+                                        username: currUsername,
                                     })
                                 );
                             }}

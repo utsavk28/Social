@@ -70,15 +70,17 @@ export const register =
             dispatch({
                 type: UPDATE_PROFILE,
                 payload: profileRes.data.profile,
-            });        
+            });
         } catch (error) {
             console.log(error);
-            const errors = error.response.data.errors;
+            if (error.response) {
+                const errors = error.response.data.errors;
 
-            if (errors) {
-                errors.forEach((err) => {
-                    dispatch(setAlert(err.msg, 'danger'));
-                });
+                if (errors) {
+                    errors.forEach((err) => {
+                        dispatch(setAlert(err.msg, 'danger'));
+                    });
+                }
             }
             dispatch({
                 type: REGISTER_FAIL,

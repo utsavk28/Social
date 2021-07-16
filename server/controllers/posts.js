@@ -355,11 +355,26 @@ export const savedPost = async (req, res) => {
 // Save Post
 export const savePost = async (req, res) => {
     try {
-        const savedPosts = await SavedPost.findOne({ user: req.user.id });
-        if (!savedPosts)
+        let savedPosts = await SavedPost.findOne({ user: req.user.id });
+        const user = await User.findById(req.user.id);
+        if (!user) {
             return res.status(404).json({
-                errors: [{ msg: 'Saved Posts Not Found' }],
+                errors: [
+                    {
+                        msg: 'User Not Found',
+                    },
+                ],
             });
+        }
+
+        if (!savedPosts) {
+            savedPosts = new SavedPost({
+                user: req.user.id,
+                savedPosts: [],
+            });
+            await savedPosts.save();
+        }
+        
 
         const post = await Post.findById(req.params.id);
         if (!post)

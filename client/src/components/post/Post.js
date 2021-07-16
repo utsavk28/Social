@@ -67,11 +67,24 @@ const Post = ({ post, onPostPage }) => {
                 <>
                     <div className='post-headline'>
                         <div className='profile-img-post'>
-                            <img src={post.profileImage} alt='profile-img' />
+                            <Link
+                                to={`/u/${post.username}`}
+                                className='remove-link-style'
+                            >
+                                <img
+                                    src={post.profileImage}
+                                    alt='profile-img'
+                                />
+                            </Link>
                         </div>
                         <div className='profile-user-details'>
-                            <h4>{post.name}</h4>
-                            <p>@{post.username}</p>
+                            <Link
+                                to={`/u/${post.username}`}
+                                className='remove-link-style'
+                            >
+                                <h4>{post.name}</h4>
+                                <p>@{post.username}</p>
+                            </Link>
                         </div>
                         <div className='option-icon'>
                             <button
