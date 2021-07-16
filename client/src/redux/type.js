@@ -14,6 +14,7 @@ export const LOGOUT = 'LOGOUT';
 
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const GET_PROFILE = 'GET_PROFILE';
+export const GET_PROFILES = 'GET_PROFILES';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const GET_CURR_PROFILE = 'GET_CURR_PROFILE';
@@ -32,3 +33,7 @@ export const UNLIKE_POST = 'UNLIKE_POST';
 export const GET_COMMENTS = 'GET_COMMENTS';
 export const COMMENT_POST = 'COMMENT_POST';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+
+export const GET_SAVED_POST = 'GET_SAVED_POST';
+export const UPDATE_SAVED_POST = 'UPDATE_SAVED_POST';
+export const SAVED_POST_ERROR = 'SAVED_POST_ERROR';

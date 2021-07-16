@@ -15,6 +15,9 @@ import HomePage from './components/home/HomePage';
 import PostPage from './components/post/PostPage';
 import EditPost from './components/post/EditPost';
 import DeletePost from './components/post/DeletePost';
+import Following from './components/profile/Following';
+import Follower from './components/profile/Follower';
+import {getSavedPost} from './redux/actions/savedposts'
 
 function App() {
     const dispatch = useDispatch();
@@ -25,6 +28,8 @@ function App() {
 
     useEffect(() => {
         dispatch(loadUser());
+        dispatch(getSavedPost());
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -42,6 +47,8 @@ function App() {
                         <Route exact path='/login' component={Login} />
                         <Route exact path='/explore' component={test} />
                         <Route exact path='/u/:username' component={Profile} />
+                        <Route exact path='/u/:username/followers' component={Follower} />
+                        <Route exact path='/u/:username/following' component={Following} />
                         <PrivateRoute
                             exact
                             path='/u/:username/update'

@@ -10,13 +10,42 @@
     flex-wrap: wrap;
     width: 100%;
     padding: 8px;
+}
 
+.profile-item-details-card {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 8px;
 }
 
 .profile-img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
+}
+
+.profile-img > img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 6px solid #DFE2EF;
+    object-fit: cover;
+}
+
+
+.profile-img-post {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.profile-img-post > img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #dfe2ef;
+    object-fit: cover;
 }
 
 .profile-content {
@@ -38,14 +67,6 @@
     margin: 0 2px;
 }
 
-.profile-img > img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 6px solid #DFE2EF;
-    object-fit: cover;
-}
-
 .edit-icon {
     position: absolute;
     right: 16px;
@@ -61,9 +82,30 @@
     margin-right: 8px;
 }
 
+.btn-grp-card {
+    width: 50px;
+}
+
+.btn-grp-card > button {
+    margin-right: 8px;
+    position: absolute;
+    right: 5%;
+}
+
+
 @media screen and (max-width:600px) {
-    .profile-content {
+    .profile-details-card > .profile-content {
         margin: 8px 2px 2px 2px;
         width: 100%;
     }
+
+    .profile-item-details-card > .profile-content {
+        margin: 2px;
+    }
 }
+
+.connectivity-dashboard {
+    display: flex;
+    flex-wrap: wrap;
+}
+

@@ -1,21 +1,36 @@
 import React, { Fragment } from 'react';
-import {Link} from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import editIcon from '../../images/icons/edit.png';
+import { followUser, unfollowUser } from '../../redux/actions/profile';
+import Dashboard from './Dashboard';
 
 const DetailCard = ({ profile, currUsername }) => {
+    const dispatch = useDispatch();
     const {
-        user: { username },
+        profile: {
+            currProfile: { following },
+        },
+        post: { posts },
+    } = useSelector((state) => state);
+    const {
+        user: { username, _id: userId },
         name,
         profileImg,
         bio,
+        following: profile_following,
+        followers: profile_followers,
     } = profile;
+
+    const followStatus =
+        following.filter((flw) => flw.user === userId).length > 0;
 
     return (
         <Fragment>
             <div className='profile-details'>
                 {profile.user.username === currUsername && (
                     <div className='edit-icon'>
-                        <Link className='btn' to={`/u/${currUsername}/update`} >
+                        <Link className='btn' to={`/u/${currUsername}/update`}>
                             <img src={editIcon} alt='' />
                         </Link>
                     </div>
@@ -28,14 +43,46 @@ const DetailCard = ({ profile, currUsername }) => {
                         <h3>{name}</h3>
                         <div className='profile-content-details'>
                             <p className='username'>{username}</p>
+                            <Dashboard
+                                followers={profile_followers}
+                                following={profile_following}
+                                posts={posts}
+                            />
                             <p>{bio ? bio : '.'}</p>
                             {username !== currUsername && (
                                 <div className='btn-grp'>
+                                    {followStatus ? (
+                                        <button
+                                            className='btn btn-outline-primary'
+                                            onClick={() => {
+                                                dispatch(
+                                                    unfollowUser({
+                                                        id: userId,
+                                                        username,
+                                                    })
+                                                );
+                                            }}
+                                        >
+                                            UnFollow
+                                        </button>
+                                    ) : (
+                                        <button
+                                            className='btn btn-outline-primary'
+                                            onClick={() => {
+                                                dispatch(
+                                                    followUser({
+                                                        id: userId,
+                                                        username,
+                                                    })
+                                                );
+                                            }}
+                                        >
+                                            Follow
+                                        </button>
+                                    )}
+
                                     <button className='btn btn-primary'>
                                         Message
-                                    </button>
-                                    <button className='btn btn-outline-primary'>
-                                        Follow
                                     </button>
                                 </div>
                             )}

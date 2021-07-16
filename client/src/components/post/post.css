@@ -94,6 +94,12 @@
     object-fit: cover;
 }
 
+.post-interaction-btns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
 .preview-post {
     margin: 24px;
 }
@@ -108,6 +114,11 @@
 
 .comment-btn {
     width: 26px;
+}
+
+.bookmark-btn {
+    position: relative;
+    right: 0;
 }
 
 .comment-form {
@@ -170,7 +181,6 @@
     width: 20px;
 }
 
-
 .edit-icon {
     position: absolute;
     right: 16px;
@@ -180,8 +190,6 @@
 .edit-icon img {
     width: 24px;
 }
-
-
 
 @media screen and (max-width: 600px) {
     .post-interaction {

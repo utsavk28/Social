@@ -4,6 +4,7 @@ import {
     CLEAR_PROFILE,
     GET_CURR_PROFILE,
     UPDATE_PROFILE,
+    GET_PROFILES,
 } from '../type';
 
 const initialState = {
@@ -30,6 +31,13 @@ const reducer = (state = initialState, action) => {
                 currProfile: payload,
                 loading: false,
             };
+        case GET_PROFILES: {
+            return {
+                ...state,
+                profiles: payload,
+                loading: false,
+            };
+        }
         case GET_PROFILE:
             return {
                 ...state,

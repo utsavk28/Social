@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator';
 import Post from '../models/Post.js';
 import User from '../models/User.js';
 import Profile from '../models/Profile.js';
+import SavedPost from '../models/Saved.js';
 
 // Get all Post
 export const getAllPost = async (req, res) => {
@@ -272,14 +273,12 @@ export const deleteComment = async (req, res) => {
                 msg: 'Comment Not Found',
             });
 
-        comment = comment[0]
-
+        comment = comment[0];
 
         if (comment.user.toString() !== req.user.id)
             return res.status(401).json({
                 msg: 'Not Authorized',
             });
-
 
         post.comments = post.comments.filter(
             (comment) => comment.id !== req.params.commentId
@@ -315,8 +314,122 @@ export const unlikeComment = async (req, res) => {
     } catch (error) {
         console.log(error);
         if (error.kind == 'ObjectId')
-            return res.status(400).json({ msg: 'Comment not found' });
+            return res.status(400).json({
+                errors: [{ msg: 'Comment not found' }],
+            });
 
+        res.status(500).json({ msg: 'Server Error' });
+    }
+};
+
+// Get Saved Post
+export const savedPost = async (req, res) => {
+    try {
+        let savedPost = await SavedPost.findOne({ user: req.user.id });
+        const user = await User.findById(req.user.id);
+        if (!user) {
+            return res.status(404).json({
+                errors: [
+                    {
+                        msg: 'User Not Found',
+                    },
+                ],
+            });
+        }
+
+        if (!savedPost) {
+            savedPost = new SavedPost({
+                user: req.user.id,
+                savedPosts: [],
+            });
+            await savedPost.save();
+        }
+
+
+        res.json(savedPost);
+    } catch (error) {
+        res.status(500).json({ msg: 'Server Error' });
+    }
+};
+
+// Save Post
+export const savePost = async (req, res) => {
+    try {
+        const savedPosts = await SavedPost.findOne({ user: req.user.id });
+        if (!savedPosts)
+            return res.status(404).json({
+                errors: [{ msg: 'Saved Posts Not Found' }],
+            });
+
+        const post = await Post.findById(req.params.id);
+        if (!post)
+            return res.status(404).json({
+                errors: [{ msg: 'Post Not Found' }],
+            });
+
+        if (
+            savedPosts.savedPosts.filter(
+                (post) => post._id.toString() === req.params.id
+            ).length > 0
+        ) {
+            return res.status(400).json({
+                errors: [
+                    {
+                        msg: 'Already Added',
+                    },
+                ],
+            });
+        }
+
+        savedPosts.savedPosts.unshift(req.params.id);
+        await savedPosts.save();
+        res.json(savedPosts);
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({ msg: 'Server Error' });
+    }
+};
+
+export const removeSavedPost = async (req, res) => {
+    try {
+        const savedPosts1 = await SavedPost.findOne({ user: req.user.id });
+        if (!savedPosts1)
+            return res.status(404).json({
+                errors: [{ msg: 'Saved Posts Not Found' }],
+            });
+
+        const post = await Post.findById(req.params.id);
+
+        if (!post)
+            return res.status(404).json({
+                errors: [{ msg: 'Post Not Found' }],
+            });
+
+
+        if (
+            savedPosts1.savedPosts.filter(
+                (post) => post._id.toString() === req.params.id
+            ).length === 0
+        ) {
+            console.log('error');
+            return res.status(400).json({
+                errors: [
+                    {
+                        msg: "Doesn't Exists",
+                    },
+                ],
+            });
+        }
+
+        savedPosts1.savedPosts = savedPosts1.savedPosts.filter(
+            (post) => post._id.toString() !== req.params.id
+        );
+
+        await savedPosts1.save();
+        res.json(savedPosts1);
+    } catch (error) {
+        console.log(error);
         res.status(500).json({ msg: 'Server Error' });
     }
 };

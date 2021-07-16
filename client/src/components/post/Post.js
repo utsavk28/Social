@@ -4,16 +4,24 @@ import heartFilled from '../../images/icons/heart-filled.png';
 import { Link } from 'react-router-dom';
 import comments from '../../images/icons/comments.png';
 import options from '../../images/icons/options.png';
+import bookmark from '../../images/icons/bookmark.png';
+import bookmark1 from '../../images/icons/bookmark1.png';
 import Comments from './Comments';
 import { useDispatch, useSelector } from 'react-redux';
 import { commentOnPost, likePost, unlikePost } from '../../redux/actions/post';
+import { addSavedPost, removeSavedPost } from '../../redux/actions/savedposts';
 
 const Post = ({ post, onPostPage }) => {
     const [comment, setComment] = useState('');
     const [active, setActive] = useState(false);
-    const { user } = useSelector((state) => state.auth);
+    const {
+        auth: { user },
+        savedpost: {
+            savedPost: { savedPosts },
+        },
+    } = useSelector((state) => state);
     const [isLiked, setIsLiked] = useState();
-
+    const [saved, setSaved] = useState(false);
     const dispatch = useDispatch();
 
     const onChange = (e) => {
@@ -27,12 +35,24 @@ const Post = ({ post, onPostPage }) => {
             );
     }, [post, user]);
 
+    useEffect(() => {
+        if (savedPosts)
+            setSaved(
+                savedPosts.filter((post1) => post1._id === post._id).length > 0
+            );
+    }, [post, savedPosts]);
+
     const onClick = () => {
         if (isLiked) {
             dispatch(unlikePost(post._id));
         } else {
             dispatch(likePost(post._id));
         }
+    };
+
+    const savePostBtn = (e) => {
+        if (e.target.name === 'remove') dispatch(removeSavedPost(post._id));
+        else if (e.target.name === 'save') dispatch(addSavedPost(post._id));
     };
 
     const submitComment = (e) => {
@@ -101,30 +121,61 @@ const Post = ({ post, onPostPage }) => {
                     </Link>
                     <div className='post-interaction'>
                         <div className='post-interaction-btns'>
-                            <button className='btn' onClick={onClick}>
-                                {isLiked ? (
+                            <div>
+                                <button className='btn' onClick={onClick}>
+                                    {isLiked ? (
+                                        <img
+                                            className='like-btn'
+                                            src={heartFilled}
+                                            alt=''
+                                        />
+                                    ) : (
+                                        <img
+                                            className='like-btn'
+                                            src={heart}
+                                            alt=''
+                                        />
+                                    )}
+                                    {post.likes.length}
+                                </button>
+                                <button className='btn'>
                                     <img
-                                        className='like-btn'
-                                        src={heartFilled}
+                                        className='comment-btn'
+                                        src={comments}
                                         alt=''
-                                    />
-                                ) : (
+                                    />{' '}
+                                    {post.comments.length}
+                                </button>
+                            </div>
+                            {saved ? (
+                                <button
+                                    className='btn bookmark-btn'
+                                    name='remove'
+                                    // onClick={savePostBtn}
+                                >
                                     <img
-                                        className='like-btn'
-                                        src={heart}
+                                        name='remove'
+                                        className=''
+                                        src={bookmark1}
                                         alt=''
+                                        onClick={savePostBtn}
                                     />
-                                )}
-                                {post.likes.length}
-                            </button>
-                            <button className='btn'>
-                                <img
-                                    className='comment-btn'
-                                    src={comments}
-                                    alt=''
-                                />{' '}
-                                { post.comments.length}
-                            </button>
+                                </button>
+                            ) : (
+                                <button
+                                    className='btn bookmark-btn'
+                                    name='save'
+                                    // onClick={savePostBtn}
+                                >
+                                    <img
+                                        name='save'
+                                        className=''
+                                        src={bookmark}
+                                        alt=''
+                                        onClick={savePostBtn}
+                                    />
+                                </button>
+                            )}
                         </div>
                         <div className='post-interaction-comments'>
                             <form

@@ -16,6 +16,9 @@ import {
     updateComment,
     likeComment,
     unlikeComment,
+    savePost,
+    savedPost,
+    removeSavedPost,
 } from '../../controllers/posts.js';
 
 const router = express.Router();
@@ -49,7 +52,6 @@ router.post(
 // @access      Private
 router.put('/:id', auth, updatePost);
 
-
 // @route       Delete api/posts/:id
 // @description Delete post by post id
 // @access      Private
@@ -64,7 +66,6 @@ router.put('/like/:id', auth, likePost);
 // @description Like post by post id
 // @access      Private
 router.put('/unlike/:id', auth, unlikePost);
-
 
 // @route       PUT api/posts/comments/:id/
 // @description Post a comment under a post
@@ -87,28 +88,23 @@ router.put(
 // @route       Post api/posts/comments/delete/:id/:commentId
 // @description Delete comment by post & comment id
 // @access      Private
-router.delete(
-    '/comments/delete/:id/:commentId',
-    auth,
-    deleteComment
-);
+router.delete('/comments/delete/:id/:commentId', auth, deleteComment);
 
 // @route       PUT api/posts/comments/like/:id/:commentId/
 // @description Like comment by comment id
 // @access      Private
-router.put(
-    '/comments/like/:id/:commentId',
-    auth,
-    likeComment
-);
+router.put('/comments/like/:id/:commentId', auth, likeComment);
 
 // @route       PUT api/posts/comments/unlike/:id/:commentId/
 // @description Unlike comment by comment id
 // @access      Private
-router.put(
-    '/comments/unlike/:id/:commentId',
-    auth,
-    unlikeComment
-);
+router.put('/comments/unlike/:id/:commentId', auth, unlikeComment);
+
+router.get('/saved/all', auth, savedPost);
+
+
+router.put('/saved/:id', auth, savePost);
+
+router.put('/saved/remove/:id',auth, removeSavedPost);
 
 export default router;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Posts from '../post/Posts';
+import SavedPost from '../post/SavedPost';
 
 const PostsContainer = () => {
     const [tab, setTab] = useState('post');
@@ -23,16 +24,16 @@ const PostsContainer = () => {
                 <li className='nav-item'>
                     <button
                         className={`nav-link ${
-                            'comment' === tab ? 'active' : ''
+                            'saved' === tab ? 'active' : ''
                         }`}
-                        name='comment'
+                        name='saved'
                         onClick={onClick}
                     >
-                        Comments
+                        Saved Posts
                     </button>
                 </li>
             </ul>
-            <Posts />
+            {tab === 'post' ? <Posts /> : <SavedPost />}
         </div>
     );
 };

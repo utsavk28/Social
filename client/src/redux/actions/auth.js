@@ -50,7 +50,11 @@ export const register =
         const profileBody = JSON.stringify({ name: fullname });
 
         try {
-            const userRes = await axios.post(`${url}/api/users`, userBody, config);
+            const userRes = await axios.post(
+                `${url}/api/users`,
+                userBody,
+                config
+            );
             dispatch({
                 type: REGISTER_USER,
                 payload: userRes.data,
@@ -66,7 +70,7 @@ export const register =
             dispatch({
                 type: UPDATE_PROFILE,
                 payload: profileRes.data.profile,
-            });
+            });        
         } catch (error) {
             console.log(error);
             const errors = error.response.data.errors;

@@ -6,6 +6,7 @@ import {
     PROFILE_ERROR,
     GET_CURR_PROFILE,
     UPDATE_PROFILE,
+    GET_PROFILES
 } from '../type';
 
 // Fetch Profile
@@ -60,7 +61,7 @@ export const updateProfile =
                 type: UPDATE_PROFILE,
                 payload: res.data.profile,
             });
-            dispatch(setAlert('Profile Updated','success'))
+            dispatch(setAlert('Profile Updated', 'success'));
         } catch (error) {
             const errors = error.response.data.errors;
 
@@ -74,3 +75,72 @@ export const updateProfile =
             });
         }
     };
+
+// Follow User
+export const followUser =
+    ({ id, username }) =>
+    async (dispatch) => {
+        try {
+            await axios.put(`${url}/api/profile/add/following/${id}`);
+            await axios.put(`${url}/api/profile/add/follower/${id}`);
+
+            dispatch(getProfile(username));
+            dispatch(getCurrProfile());
+            dispatch(setAlert('Following User', 'success'));
+        } catch (error) {
+            const errors = error.response.data.errors;
+
+            if (errors) {
+                errors.forEach((err) => {
+                    dispatch(setAlert(err.msg, 'danger'));
+                });
+            }
+            dispatch({
+                type: PROFILE_ERROR,
+            });
+        }
+    };
+
+// Unfollow User
+export const unfollowUser =
+    ({ id, username }) =>
+    async (dispatch) => {
+        try {
+            await axios.put(`${url}/api/profile/delete/following/${id}`);
+            await axios.put(`${url}/api/profile/delete/follower/${id}`);
+            dispatch(getProfile(username));
+            dispatch(getCurrProfile());
+            dispatch(setAlert('Unfollowed User', 'success'));
+        } catch (error) {
+            const errors = error.response.data.errors;
+
+            if (errors) {
+                errors.forEach((err) => {
+                    dispatch(setAlert(err.msg, 'danger'));
+                });
+            }
+            dispatch({
+                type: PROFILE_ERROR,
+            });
+        }
+    };
+
+// Get Groups of profiles
+export const getProfilesById = (idList) => async (dispatch) => {
+    try {
+        const savedProfiles = [];
+        for (let i = 0; i < idList.length; i++) {
+            const profile = await axios.get(`${url}/api/profile/user/id/${idList[i].user}`);
+            savedProfiles.push(profile.data);
+        }
+        dispatch({
+            type: GET_PROFILES,
+            payload: savedProfiles,
+        });
+    } catch (error) {
+        console.log(error);
+        dispatch({
+            type: PROFILE_ERROR,
+        });
+    }
+};

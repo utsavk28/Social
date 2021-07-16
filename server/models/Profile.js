@@ -1,8 +1,9 @@
-import mongooose from 'mongoose';
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
-const ProfileSchema = new mongooose.Schema({
-    user: {
-        type: mongooose.Schema.Types.ObjectId,
+const ProfileSchema = new Schema({
+    user: { 
+        type: Schema.Types.ObjectId,
         ref: 'user',
     },
     name: {
@@ -14,11 +15,27 @@ const ProfileSchema = new mongooose.Schema({
     profileImg: {
         type: String,
     },
+    followers: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'users',
+            },
+        },
+    ],
+    following: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'users',
+            },
+        },
+    ],
     DOB: {
         type: Date,
     },
 });
 
-const Profile = mongooose.model('profile', ProfileSchema);
+const Profile = mongoose.model('profile', ProfileSchema);
 
 export default Profile;

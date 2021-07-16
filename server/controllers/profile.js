@@ -23,6 +23,28 @@ export const getCurrProfile = async (req, res) => {
     }
 };
 
+// Get individual Profile by User Id
+export const getProfileById = async (req, res) => {
+    try {
+        const profile = await Profile.findOne({
+            user: req.params.id,
+        }).populate('user', ['username', 'email']);
+
+        if (!profile)
+            return res.status(400).json({
+                msg: 'Profile not found',
+            });
+
+        res.json(profile);
+    } catch (error) {
+        console.log(error);
+        if (error.kind == 'ObjectId') {
+            return res.status(400).json({ msg: 'Profile not found' });
+        }
+        res.status(500).json({ msg: 'Server Error' });
+    }
+};
+
 // Get individual Profile
 export const getProfileByUserName = async (req, res) => {
     try {
@@ -79,13 +101,15 @@ export const updateProfile = async (req, res) => {
 
             const newProfile = new Profile({
                 user: req.user.id,
-                bio:bio && bio,
+                bio: bio ? bio : '',
                 DOB: DOB && DOB,
                 name,
                 profileImg: profileImg ? profileImg : avatar,
+                followers: [],
+                following: [],
             });
             await newProfile.save();
-            return res.json({ profile:newProfile, msg: 'Profile Created' });
+            return res.json({ profile: newProfile, msg: 'Profile Created' });
         }
 
         profile = await Profile.findOneAndUpdate(
@@ -108,6 +132,156 @@ export const deleteProfile = async (req, res) => {
         await Profile.findOneAndRemove({ user: req.user.id });
         await User.findOneAndRemove({ _id: req.user.id });
         res.json({ msg: 'User Deleted' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: 'Server Error' });
+    }
+};
+
+// Add Follower
+export const addFollower = async (req, res) => {
+    try {
+        const followUser = await User.findById(req.params.id);
+        if (!followUser)
+            return res.status(404).json({
+                errors: [
+                    {
+                        msg: 'User Not Found',
+                    },
+                ],
+            });
+
+        const profile = await Profile.findOne({ user: req.user.id });
+
+        if (
+            profile.following.filter(
+                (user) => user.user.toString() === req.params.id
+            ).length > 0
+        )
+            return res.status(400).json({
+                errors: [
+                    {
+                        msg: 'Already a Follower',
+                    },
+                ],
+            });
+
+        profile.following.push({ user: req.params.id });
+        await profile.save();
+
+        res.json(profile);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: 'Server Error' });
+    }
+};
+
+// Add Following
+export const addFollowing = async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ user: req.params.id });
+        if (!profile)
+            return res.status(404).json({
+                errors: [
+                    {
+                        msg: 'User Not Found',
+                    },
+                ],
+            });
+        if (
+            profile.followers.filter(
+                (user) => user.user.toString() === req.user.id
+            ).length > 0
+        )
+            return res.status(400).json({
+                errors: [
+                    {
+                        msg: 'Already Following ',
+                    },
+                ],
+            });
+
+        profile.followers.push({ user: req.user.id });
+        await profile.save();
+
+        res.json(profile);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: 'Server Error' });
+    }
+};
+
+// Remove Follower
+export const removeFollower = async (req, res) => {
+    try {
+        const followUser = await User.findById(req.params.id);
+        if (!followUser)
+            return res.status(404).json({
+                errors: [
+                    {
+                        msg: 'User Not Found',
+                    },
+                ],
+            });
+
+        const profile = await Profile.findOne({ user: req.user.id });
+
+        if (
+            profile.following.filter(
+                (user) => user.user.toString() === req.params.id
+            ).length === 0
+        )
+            return res.status(400).json({
+                errors: [
+                    {
+                        msg: 'Follow the User First to Remove',
+                    },
+                ],
+            });
+
+        profile.following = profile.following.filter(
+            (user) => user.user.toString() !== req.params.id
+        );
+        await profile.save();
+
+        res.json(profile);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg: 'Server Error' });
+    }
+};
+
+// Remove Follower
+export const removeFollowing = async (req, res) => {
+    try {
+        const profile = await Profile.findOne({ user: req.params.id });
+        if (!profile)
+            return res.status(404).json({
+                errors: [
+                    {
+                        msg: 'User Not Found',
+                    },
+                ],
+            });
+        if (
+            profile.followers.filter(
+                (user) => user.user.toString() === req.user.id
+            ).length === 0
+        )
+            return res.status(400).json({
+                errors: [
+                    {
+                        msg: 'Follow to Unfollow the user ',
+                    },
+                ],
+            });
+
+        profile.followers = profile.followers.filter(
+            (user) => user.user.toString() !== req.user.id
+        );
+        await profile.save();
+
+        res.json(profile);
     } catch (error) {
         console.log(error);
         res.status(500).json({ msg: 'Server Error' });

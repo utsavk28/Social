@@ -44,6 +44,25 @@ export const getPostById = (id) => async (dispatch) => {
     }
 };
 
+// Fetch Posts By Group of Id
+export const getPostsById = (idArr) => async (dispatch) => {
+    try {
+        const savedPosts = [];
+        for (let i = 0; i < idArr.length; i++) {
+            const post = await axios.get(`${url}/api/posts/${idArr[i]._id}`);
+            savedPosts.push(post.data);
+        }
+        dispatch({
+            type: GET_POSTS,
+            payload: savedPosts,
+        });
+    } catch (error) {
+        dispatch({
+            type: POST_ERROR,
+        });
+    }
+};
+
 // Fetch All Specific Users Posts
 export const getUsersPost = (id) => async (dispatch) => {
     try {
@@ -199,7 +218,6 @@ export const commentOnPost =
     };
 
 // Delete Comment
-
 export const deleteComment =
     ({ id, commentId }) =>
     async (dispatch) => {
