@@ -1,10 +1,11 @@
-import gravatar from 'gravatar';
+const gravatar = require('gravatar');
 
-import Profile from '../models/Profile.js';
-import User from '../models/User.js';
+const Profile = require('../models/Profile');
+const User = require('../models/User');
 
 // Get Curr Profile
-export const getCurrProfile = async (req, res) => {
+
+const getCurrProfile = async (req, res) => {
     try {
         const profile = await Profile.findOne({ user: req.user.id }).populate(
             'user',
@@ -24,7 +25,7 @@ export const getCurrProfile = async (req, res) => {
 };
 
 // Get individual Profile by User Id
-export const getProfileById = async (req, res) => {
+const getProfileById = async (req, res) => {
     try {
         const profile = await Profile.findOne({
             user: req.params.id,
@@ -46,7 +47,7 @@ export const getProfileById = async (req, res) => {
 };
 
 // Get individual Profile
-export const getProfileByUserName = async (req, res) => {
+const getProfileByUserName = async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username });
         const profile = await Profile.findOne({
@@ -69,7 +70,7 @@ export const getProfileByUserName = async (req, res) => {
 };
 
 // Get All Profiles
-export const getAllProfile = async (req, res) => {
+const getAllProfile = async (req, res) => {
     try {
         const profiles = await Profile.find().populate('user', [
             'username',
@@ -84,7 +85,7 @@ export const getAllProfile = async (req, res) => {
 };
 
 // Create or Update Profile
-export const updateProfile = async (req, res) => {
+const updateProfile = async (req, res) => {
     const { bio, DOB, name, profileImg } = req.body;
 
     try {
@@ -127,7 +128,7 @@ export const updateProfile = async (req, res) => {
 };
 
 // Delete Profile & User
-export const deleteProfile = async (req, res) => {
+const deleteProfile = async (req, res) => {
     try {
         await Profile.findOneAndRemove({ user: req.user.id });
         await User.findOneAndRemove({ _id: req.user.id });
@@ -139,7 +140,7 @@ export const deleteProfile = async (req, res) => {
 };
 
 // Add Follower
-export const addFollower = async (req, res) => {
+const addFollower = async (req, res) => {
     try {
         const followUser = await User.findById(req.params.id);
         if (!followUser)
@@ -177,7 +178,7 @@ export const addFollower = async (req, res) => {
 };
 
 // Add Following
-export const addFollowing = async (req, res) => {
+const addFollowing = async (req, res) => {
     try {
         const profile = await Profile.findOne({ user: req.params.id });
         if (!profile)
@@ -212,7 +213,7 @@ export const addFollowing = async (req, res) => {
 };
 
 // Remove Follower
-export const removeFollower = async (req, res) => {
+const removeFollower = async (req, res) => {
     try {
         const followUser = await User.findById(req.params.id);
         if (!followUser)
@@ -252,7 +253,7 @@ export const removeFollower = async (req, res) => {
 };
 
 // Remove Follower
-export const removeFollowing = async (req, res) => {
+const removeFollowing = async (req, res) => {
     try {
         const profile = await Profile.findOne({ user: req.params.id });
         if (!profile)
@@ -286,4 +287,17 @@ export const removeFollowing = async (req, res) => {
         console.log(error);
         res.status(500).json({ msg: 'Server Error' });
     }
+};
+
+module.exports = {
+    removeFollowing,
+    removeFollower,
+    addFollowing,
+    addFollower,
+    deleteProfile,
+    updateProfile,
+    getAllProfile,
+    getProfileByUserName,
+    getProfileById,
+    getCurrProfile,
 };

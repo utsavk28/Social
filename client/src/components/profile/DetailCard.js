@@ -1,12 +1,14 @@
-import React, { Fragment } from 'react';
+import React, { Fragment,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import editIcon from '../../images/icons/edit.png';
 import { followUser, unfollowUser } from '../../redux/actions/profile';
+import { createConversation } from '../../redux/actions/chat';
 import Dashboard from './Dashboard';
 
 const DetailCard = ({ profile, currUsername }) => {
     const dispatch = useDispatch();
+    const [redirect,setRedirect] = useState(false);
     const {
         profile: {
             currProfile: { following },
@@ -24,6 +26,13 @@ const DetailCard = ({ profile, currUsername }) => {
 
     const followStatus =
         following.filter((flw) => flw.user === userId).length > 0;
+
+    const startConversation = () => {
+        dispatch(createConversation(userId));
+        setRedirect(true);
+    };
+
+    if(redirect) return <Redirect to="/inbox" />;
 
     return (
         <Fragment>
@@ -81,7 +90,10 @@ const DetailCard = ({ profile, currUsername }) => {
                                         </button>
                                     )}
 
-                                    <button className='btn btn-primary'>
+                                    <button
+                                        className='btn btn-primary'
+                                        onClick={startConversation}
+                                    >
                                         Message
                                     </button>
                                 </div>

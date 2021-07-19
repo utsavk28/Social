@@ -1,12 +1,12 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import config from 'config';
-import { validationResult } from 'express-validator';
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const { validationResult } = require('express-validator');
 
-import User from '../models/User.js';
+const User = require('../models/User');
 
 // Register User
-export const registerUser = async (req, res) => {
+const registerUser = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
         return res.status(400).json({
@@ -29,7 +29,11 @@ export const registerUser = async (req, res) => {
 
         if (user)
             return res.status(400).json({
-                errors: [{ msg: 'User already Exists. Please check your email & username' }],
+                errors: [
+                    {
+                        msg: 'User already Exists. Please check your email & username',
+                    },
+                ],
             });
 
         user = new User({
@@ -51,10 +55,12 @@ export const registerUser = async (req, res) => {
 
         jwt.sign(payload, config.get('jwtSecret'), (err, token) => {
             if (err) throw err;
-            res.json({token});
+            res.json({ token });
         });
     } catch (error) {
         console.log(error);
         res.status(500).send('Server Error');
     }
 };
+
+module.exports = { registerUser };

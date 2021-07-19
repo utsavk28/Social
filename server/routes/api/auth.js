@@ -1,8 +1,8 @@
-import express from 'express';
-import { check, oneOf } from 'express-validator';
+const express = require('express');
+const { check, oneOf } = require('express-validator');
 
-import auth from '../../middleware/auth.js';
-import { loginUser, loadUser } from '../../controllers/auth.js';
+const auth = require('../../middleware/auth');
+const { loginUser, loadUser } = require('../../controllers/auth');
 
 const router = express.Router();
 
@@ -24,7 +24,8 @@ router.post(
                 'email',
                 'Please include a valid Email or Username'
             ).isEmail(),
-            check('username', 'Please include a valid Email or Username').not()
+            check('username', 'Please include a valid Email or Username')
+                .not()
                 .isEmpty(),
         ]),
         check('password', 'Please check your Password').exists(),
@@ -32,4 +33,4 @@ router.post(
     loginUser
 );
 
-export default router;
+module.exports = router;

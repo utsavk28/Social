@@ -11,13 +11,16 @@ import { loadUser } from './redux/actions/auth';
 import Alert from './components/layout/Alert';
 import Loader from './components/layout/Loader';
 import Profile from './components/profile/Profile';
+import Explore from './components/explore/Explore';
 import HomePage from './components/home/HomePage';
 import PostPage from './components/post/PostPage';
 import EditPost from './components/post/EditPost';
 import DeletePost from './components/post/DeletePost';
 import Following from './components/profile/Following';
 import Follower from './components/profile/Follower';
-import {getSavedPost} from './redux/actions/savedposts'
+import { getSavedPost } from './redux/actions/savedposts';
+import Messenger from './components/messenger/Messenger';
+import UserChat from './components/messenger/UserChat';
 
 function App() {
     const dispatch = useDispatch();
@@ -38,17 +41,25 @@ function App() {
     ) : (
         <div className='main-container'>
             <Router>
-                <Navbar />
+                <Route path='/' component={Navbar} />
                 <Alert />
                 <div>
                     <Switch>
                         <PrivateRoute exact path='/' component={HomePage} />
                         <Route exact path='/register' component={Register} />
                         <Route exact path='/login' component={Login} />
-                        <Route exact path='/explore' component={test} />
+                        <Route exact path='/explore' component={Explore} />
                         <Route exact path='/u/:username' component={Profile} />
-                        <Route exact path='/u/:username/followers' component={Follower} />
-                        <Route exact path='/u/:username/following' component={Following} />
+                        <Route
+                            exact
+                            path='/u/:username/followers'
+                            component={Follower}
+                        />
+                        <Route
+                            exact
+                            path='/u/:username/following'
+                            component={Following}
+                        />
                         <PrivateRoute
                             exact
                             path='/u/:username/update'
@@ -65,8 +76,13 @@ function App() {
                             path='/p/:post/delete'
                             component={DeletePost}
                         />
-                        <Route exact path='/c/:comment' component={test} />
                         <Route exact path='/activity' component={test} />
+                        <Route exact path='/inbox' component={Messenger} />
+                        <PrivateRoute
+                            exact
+                            path='/inbox/:id'
+                            component={UserChat}
+                        />
                     </Switch>
                 </div>
             </Router>

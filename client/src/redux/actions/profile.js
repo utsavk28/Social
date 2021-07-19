@@ -125,6 +125,23 @@ export const unfollowUser =
         }
     };
 
+
+// Get Profile By User Id
+export const getProfileById = (id) => async (dispatch) => {
+    try {
+        const res = await axios.get(`${url}/api/profile/user/id/${id}`);
+        dispatch({
+            type: GET_PROFILE,
+            payload: res.data,
+        });
+    } catch (error) {
+        console.log(error);
+        dispatch({
+            type: PROFILE_ERROR,
+        });
+    }
+}
+
 // Get Groups of profiles
 export const getProfilesById = (idList) => async (dispatch) => {
     try {

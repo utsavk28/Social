@@ -15,6 +15,7 @@ import {
 import setAuthToken from '../../utils/setAuthToken';
 import { getCurrProfile } from './profile';
 import { setAlert } from './alert';
+import socket from '../../utils/socket';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
@@ -29,6 +30,7 @@ export const loadUser = () => async (dispatch) => {
             payload: res.data,
         });
         dispatch(getCurrProfile());
+        socket.emit('join', res.data._id);
     } catch (error) {
         dispatch({
             type: AUTH_ERROR,

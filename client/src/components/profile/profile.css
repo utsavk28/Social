@@ -15,7 +15,6 @@
 .profile-item-details-card {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
     padding: 8px;
 }
 

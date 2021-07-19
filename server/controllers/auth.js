@@ -1,17 +1,16 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import config from 'config';
-import { validationResult } from 'express-validator';
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const { validationResult } = require('express-validator');
 
-import User from '../models/User.js';
+const User = require('../models/User');
 
 // Load User
-export const loadUser = async (req, res) => {
+const loadUser = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
         return res.status(400).json({ errors: errors.array() });
     try {
-        
         const user = await User.findById(req.user.id).select('-password');
         res.json(user);
     } catch (error) {
@@ -21,7 +20,7 @@ export const loadUser = async (req, res) => {
 };
 
 // Login User
-export const loginUser = async (req, res) => {
+const loginUser = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
         return res.status(400).json({ errors: errors.array() });
@@ -30,12 +29,9 @@ export const loginUser = async (req, res) => {
 
     try {
         let user;
-        
-        if(email)
-        user = await User.findOne({ email });
-        else 
-        user = await User.findOne({ username });
 
+        if (email) user = await User.findOne({ email });
+        else user = await User.findOne({ username });
 
         if (!user)
             return res.status(400).json({
@@ -64,4 +60,9 @@ export const loginUser = async (req, res) => {
         console.log(error);
         res.status(500).send('Server Error');
     }
+};
+
+module.exports = {
+    loadUser,
+    loginUser,
 };

@@ -1,0 +1,138 @@
+.cover-chat-container {
+    margin: 8px;
+    border: solid rgb(223, 223, 223) 1px;
+    height: 85vh;
+}
+
+.cover-chat-container-header {
+    border-bottom: solid rgb(223, 223, 223) 1px;
+    text-align: center;
+}
+
+.chat-container {
+    height: 97.5%;
+    position: relative;
+}
+
+.cover-chat-container > ul {
+    list-style: none;
+}
+
+.chat-item-card {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 4px 8px;
+}
+
+.chat-img-post {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.chat-img-post > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid #dfe2ef;
+    object-fit: cover;
+}
+
+.chat-item-content {
+    margin: auto;
+    margin-left: 8px;
+}
+
+#form {
+    padding: 0.25rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    height: 3rem;
+    box-sizing: border-box;
+}
+
+#input {
+    padding: 0 1rem;
+    flex-grow: 1;
+    border-radius: 2rem;
+    margin: 0.25rem;
+}
+
+#input:focus {
+    outline: none;
+}
+
+#form > button {
+    background: #333;
+    border: none;
+    padding: 0 1rem;
+    margin: 0.25rem;
+    border-radius: 3px;
+    outline: none;
+    color: #fff;
+}
+
+#messages {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    height: 65vh;
+}
+
+.message-cover {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+}
+
+.message {
+    margin: 8px;
+    padding: 0.5rem 1.25rem;
+    border: 0.5px solid rgb(207, 207, 207);
+    width: fit-content;
+    border-radius: 25px;
+}
+
+.sender {
+    flex-direction: row-reverse;
+    background-color: #efefef;
+    right: 0;
+}
+
+.cover-chat-container-1 {
+    width: 50%;
+    margin: auto;
+}
+
+.cover-chat-container-2 {
+    width: 75%;
+    margin: auto;
+}
+
+@media screen and (max-width: 420px) {
+    .cover-chat-container {
+        margin: 4px 0;
+        width: 100%;
+    }
+
+    #form > button {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .cover-chat-container-2 {
+        width: 100%;
+    }
+
+    .cover-chat-container-1 {
+        width: 100%;
+    }
+}

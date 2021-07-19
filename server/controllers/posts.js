@@ -1,12 +1,12 @@
-import { validationResult } from 'express-validator';
+const { validationResult } = require('express-validator');
 
-import Post from '../models/Post.js';
-import User from '../models/User.js';
-import Profile from '../models/Profile.js';
-import SavedPost from '../models/Saved.js';
+const Post = require('../models/Post');
+const User = require('../models/User');
+const Profile = require('../models/Profile');
+const SavedPost = require('../models/Saved');
 
-// Get all Post
-export const getAllPost = async (req, res) => {
+// Get all Post.
+const getAllPost = async (req, res) => {
     try {
         const posts = await Post.find().sort({ date: -1 });
         res.json(posts);
@@ -17,7 +17,7 @@ export const getAllPost = async (req, res) => {
 };
 
 // Get Single Post
-export const getPostById = async (req, res) => {
+const getPostById = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
         if (!post) {
@@ -34,7 +34,7 @@ export const getPostById = async (req, res) => {
 };
 
 // Get All Post of User
-export const getAllPostByUser = async (req, res) => {
+const getAllPostByUser = async (req, res) => {
     try {
         const posts = await Post.find({ user: req.params.userId }).sort({
             date: -1,
@@ -48,7 +48,7 @@ export const getAllPostByUser = async (req, res) => {
 };
 
 // Post a Post
-export const postPost = async (req, res) => {
+const postPost = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -83,7 +83,7 @@ export const postPost = async (req, res) => {
 };
 
 // Update a Post
-export const updatePost = async (req, res) => {
+const updatePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
 
@@ -110,7 +110,7 @@ export const updatePost = async (req, res) => {
 };
 
 // Delete Post
-export const deletePost = async (req, res) => {
+const deletePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
 
@@ -132,7 +132,7 @@ export const deletePost = async (req, res) => {
 };
 
 // Like a Post
-export const likePost = async (req, res) => {
+const likePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
 
@@ -166,7 +166,7 @@ export const likePost = async (req, res) => {
 };
 
 // Unlike a Post
-export const unlikePost = async (req, res) => {
+const unlikePost = async (req, res) => {
     try {
         let post = await Post.findById(req.params.id);
 
@@ -202,7 +202,7 @@ export const unlikePost = async (req, res) => {
 };
 
 // Post Comment
-export const postComment = async (req, res) => {
+const postComment = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -240,7 +240,7 @@ export const postComment = async (req, res) => {
 };
 
 // Update Comment
-export const updateComment = async (req, res) => {
+const updateComment = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -256,7 +256,7 @@ export const updateComment = async (req, res) => {
 };
 
 // Delete Comment
-export const deleteComment = async (req, res) => {
+const deleteComment = async (req, res) => {
     try {
         var post = await Post.findById(req.params.id);
         if (!post)
@@ -297,7 +297,7 @@ export const deleteComment = async (req, res) => {
 };
 
 // Like Comment
-export const likeComment = async (req, res) => {
+const likeComment = async (req, res) => {
     try {
     } catch (error) {
         console.log(error);
@@ -309,7 +309,7 @@ export const likeComment = async (req, res) => {
 };
 
 // Unlike Comment
-export const unlikeComment = async (req, res) => {
+const unlikeComment = async (req, res) => {
     try {
     } catch (error) {
         console.log(error);
@@ -323,7 +323,7 @@ export const unlikeComment = async (req, res) => {
 };
 
 // Get Saved Post
-export const savedPost = async (req, res) => {
+const savedPost = async (req, res) => {
     try {
         let savedPost = await SavedPost.findOne({ user: req.user.id });
         const user = await User.findById(req.user.id);
@@ -345,7 +345,6 @@ export const savedPost = async (req, res) => {
             await savedPost.save();
         }
 
-
         res.json(savedPost);
     } catch (error) {
         res.status(500).json({ msg: 'Server Error' });
@@ -353,7 +352,7 @@ export const savedPost = async (req, res) => {
 };
 
 // Save Post
-export const savePost = async (req, res) => {
+const savePost = async (req, res) => {
     try {
         let savedPosts = await SavedPost.findOne({ user: req.user.id });
         const user = await User.findById(req.user.id);
@@ -374,7 +373,6 @@ export const savePost = async (req, res) => {
             });
             await savedPosts.save();
         }
-        
 
         const post = await Post.findById(req.params.id);
         if (!post)
@@ -406,7 +404,7 @@ export const savePost = async (req, res) => {
     }
 };
 
-export const removeSavedPost = async (req, res) => {
+const removeSavedPost = async (req, res) => {
     try {
         const savedPosts1 = await SavedPost.findOne({ user: req.user.id });
         if (!savedPosts1)
@@ -420,7 +418,6 @@ export const removeSavedPost = async (req, res) => {
             return res.status(404).json({
                 errors: [{ msg: 'Post Not Found' }],
             });
-
 
         if (
             savedPosts1.savedPosts.filter(
@@ -447,4 +444,24 @@ export const removeSavedPost = async (req, res) => {
         console.log(error);
         res.status(500).json({ msg: 'Server Error' });
     }
+};
+
+module.exports = {
+    removeSavedPost,
+    savePost,
+    savedPost,
+    unlikeComment,
+    likeComment,
+    deleteComment,
+    updateComment,
+    postComment,
+    unlikePost,
+    likePost,
+    deletePost,
+    deletePost,
+    postPost,
+    getAllPostByUser,
+    getPostById,
+    getAllPost,
+    updatePost,
 };

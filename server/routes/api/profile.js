@@ -1,7 +1,7 @@
-import express from 'express';
-import auth from '../../middleware/auth.js';
+const express =require( 'express')
+const auth = require('../../middleware/auth')
 
-import {
+const {
     getCurrProfile,
     getAllProfile,
     updateProfile,
@@ -12,7 +12,7 @@ import {
     addFollowing,
     removeFollower,
     removeFollowing,
-} from '../../controllers/profile.js';
+} = require('../../controllers/profile')
 
 const router = express.Router();
 
@@ -60,4 +60,4 @@ router.put('/delete/follower/:id', auth, removeFollower);
 
 router.put('/delete/following/:id', auth, removeFollowing);
 
-export default router;
+module.exports = router;

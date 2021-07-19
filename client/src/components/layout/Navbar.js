@@ -7,8 +7,11 @@ import logo from '../../images/logo/logo.png';
 import explore from '../../images/icons/explore.png';
 import heart from '../../images/icons/heart.png';
 import home from '../../images/icons/home.png';
+import messenger from '../../images/icons/messenger.png';
+import messenger1 from '../../images/icons/messenger1.png';
 
-const Navbar = () => {
+const Navbar = ({ location }) => {
+    const path = location.pathname.slice(1);
     const {
         auth: { isAuthenticated, user },
         profile: { currProfile },
@@ -41,6 +44,23 @@ const Navbar = () => {
                                                 src={home}
                                                 alt=''
                                             />
+                                        </Link>
+                                    </li>
+                                    <li className='nav-item'>
+                                        <Link className='nav-link' to='/inbox'>
+                                            {path === 'inbox' ? (
+                                                <img
+                                                    className='nav-img'
+                                                    src={messenger1}
+                                                    alt=''
+                                                />
+                                            ) : (
+                                                <img
+                                                    className='nav-img'
+                                                    src={messenger}
+                                                    alt=''
+                                                />
+                                            )}
                                         </Link>
                                     </li>
                                     <li className='nav-item'>

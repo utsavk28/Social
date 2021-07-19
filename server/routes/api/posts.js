@@ -1,8 +1,8 @@
-import express from 'express';
-import { check } from 'express-validator';
-import auth from '../../middleware/auth.js';
+const express = require('express');
+const { check } = require('express-validator');
+const auth = require('../../middleware/auth');
 
-import {
+const {
     getAllPost,
     postPost,
     getPostById,
@@ -19,7 +19,7 @@ import {
     savePost,
     savedPost,
     removeSavedPost,
-} from '../../controllers/posts.js';
+} = require('../../controllers/posts');
 
 const router = express.Router();
 
@@ -102,9 +102,8 @@ router.put('/comments/unlike/:id/:commentId', auth, unlikeComment);
 
 router.get('/saved/all', auth, savedPost);
 
-
 router.put('/saved/:id', auth, savePost);
 
-router.put('/saved/remove/:id',auth, removeSavedPost);
+router.put('/saved/remove/:id', auth, removeSavedPost);
 
-export default router;
+module.exports = router;
