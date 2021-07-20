@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserConversations } from '../../redux/actions/chat';
-import Loader from '../layout/Loader';
 
 const ChatList = () => {
     const history = useHistory();
@@ -24,37 +23,33 @@ const ChatList = () => {
                 <h5>Chats</h5>
             </div>
             <ul className='list-unstyled'>
-                {conversations.length > 0 ? (
-                    conversations.map((conv) => {
-                        const user = conv.members.filter(
-                            (c) => c.username !== og_username
-                        )[0];
-                        return (
-                            <li key={conv._id}>
-                                <div
-                                    className='btn'
-                                    onClick={() => {
-                                        history.push(`/inbox/${user._id}`);
-                                    }}
-                                >
-                                    <div className='chat-item-card'>
-                                        <div className='chat-img-post'>
-                                            <img
-                                                src={user.profile.profileImg}
-                                                alt='profile-img'
-                                            />
-                                        </div>
-                                        <div className='chat-item-content'>
-                                            <h5>{user.username}</h5>
-                                        </div>
+                {conversations.map((conv) => {
+                    const user = conv.members.filter(
+                        (c) => c.username !== og_username
+                    )[0];
+                    return (
+                        <li key={conv._id}>
+                            <div
+                                className='btn'
+                                onClick={() => {
+                                    history.push(`/inbox/${user._id}`);
+                                }}
+                            >
+                                <div className='chat-item-card'>
+                                    <div className='chat-img-post'>
+                                        <img
+                                            src={user.profile.profileImg}
+                                            alt='profile-img'
+                                        />
+                                    </div>
+                                    <div className='chat-item-content'>
+                                        <h5>{user.username}</h5>
                                     </div>
                                 </div>
-                            </li>
-                        );
-                    })
-                ) : (
-                    <Loader />
-                )}
+                            </div>
+                        </li>
+                    );
+                })}
             </ul>
         </div>
     );
