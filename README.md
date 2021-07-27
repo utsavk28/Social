@@ -8,7 +8,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://social-app-v1.netlify.app/">
     <img src="https://utsavk28.github.io/HostedAssets/social-logo.png" alt="Logo" height="80">
   </a>
 
