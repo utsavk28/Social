@@ -2,7 +2,7 @@ import { SAVED_POST_ERROR, GET_SAVED_POST, UPDATE_SAVED_POST } from '../type';
 
 const initialState = {
     savedPost: {},
-    error: '',
+    error: null,
 };
 
 const reducer = (state = initialState, action) => {

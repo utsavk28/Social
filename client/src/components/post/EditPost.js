@@ -9,10 +9,9 @@ const Post = ({ match }) => {
     const [action, setAction] = useState(false);
     const [formData, setFormData] = useState();
     const {
-        post: { post },
+        post: { post, error },
     } = useSelector((state) => state);
 
-    
     const dispatch = useDispatch();
 
     const onChange = async (e) => {
@@ -40,7 +39,7 @@ const Post = ({ match }) => {
     const submitForm = (e) => {
         e.preventDefault();
         dispatch(updatePost({ id: post._id, ...formData }));
-        setAction(true)
+        setAction(true);
     };
 
     useEffect(() => {
@@ -55,13 +54,12 @@ const Post = ({ match }) => {
             });
     }, [post]);
 
-
     if (action) return <Redirect to={`/p/${match.params.post}`} />;
-
+    if (error) return <Redirect to='/404' />;
 
     return (
         post && (
-            <div className='post container-md mx-auto my-4'>
+            <div className='post container-md mx-auto my-4 bg-white'>
                 <div className='post-headline'>
                     <div className='profile-img-post'>
                         <img src={post.profileImage} alt='profile-img' />

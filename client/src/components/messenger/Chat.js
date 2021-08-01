@@ -5,6 +5,8 @@ import socket from '../../utils/socket';
 import { getProfileById } from '../../redux/actions/profile';
 import Message from './Message';
 import Loader from '../layout/Loader';
+import backIcon from '../../images/icons/back.png';
+import { Link, Redirect } from 'react-router-dom';
 
 const Chat = ({ match }) => {
     var id = match.params.id;
@@ -16,7 +18,7 @@ const Chat = ({ match }) => {
         auth: {
             user: { _id, username: og_username },
         },
-        chat: { conversation, messages },
+        chat: { conversation, messages, error },
     } = useSelector((state) => state);
 
     const [text, setText] = useState('');
@@ -66,8 +68,10 @@ const Chat = ({ match }) => {
         scrollToBottom();
     }, [messages]);
 
+    if (error) return <Redirect to='/404' />;
+
     return (
-        <div className='cover-chat-container cover-chat-container-2'>
+        <div className='cover-chat-container cover-chat-container-2 bg-white'>
             {conversation && user ? (
                 <div className='chat-container'>
                     <div className='profile-item-details-card mx-4 my-1 border-bottom'>
@@ -83,14 +87,22 @@ const Chat = ({ match }) => {
                                 <p className='username'>{user.username}</p>
                             </div>
                         </div>
+                        <div>
+                            <div className='edit-icon m-2'>
+                                <Link to='/inbox' className='btn'>
+                                    <img src={backIcon} alt='' />
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                     <div id='messages' className='mt-2 mx-1'>
                         {messages.map((msg) => {
+                            console.log(msg);
                             return (
                                 <Message
                                     key={msg._id}
                                     className={msg.sender === _id && 'sender'}
-                                    text={msg.text}
+                                    msg={msg}
                                 />
                             );
                         })}

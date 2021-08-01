@@ -12,7 +12,7 @@ const initialState = {
     profile: null,
     profiles: [],
     loading: true,
-    error: {},
+    error: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -24,18 +24,21 @@ const reducer = (state = initialState, action) => {
                 profile: payload,
                 currProfile: payload,
                 loading: false,
+                error: null,
             };
         case GET_CURR_PROFILE:
             return {
                 ...state,
                 currProfile: payload,
                 loading: false,
+                error: null,
             };
         case GET_PROFILES: {
             return {
                 ...state,
                 profiles: payload,
                 loading: false,
+                error: null,
             };
         }
         case GET_PROFILE:
@@ -43,11 +46,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 profile: payload,
                 loading: false,
+                error: null,
             };
         case PROFILE_ERROR:
             return {
                 ...state,
-                error: payload,
+                error: 'Error',
                 loading: false,
             };
         case CLEAR_PROFILE:
@@ -55,6 +59,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 profile: null,
                 profiles: [],
+                error: null,
                 loading: false,
             };
         default:

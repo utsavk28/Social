@@ -21,6 +21,7 @@ import Follower from './components/profile/Follower';
 import { getSavedPost } from './redux/actions/savedposts';
 import Messenger from './components/messenger/Messenger';
 import UserChat from './components/messenger/UserChat';
+import Page404 from './components/layout/Page404';
 
 function App() {
     const dispatch = useDispatch();
@@ -83,6 +84,8 @@ function App() {
                             path='/inbox/:id'
                             component={UserChat}
                         />
+                        <Route path='/404' component={Page404} />
+                        <Route path='' component={Page404} />
                     </Switch>
                 </div>
             </Router>

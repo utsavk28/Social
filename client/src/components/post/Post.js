@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import heart from '../../images/icons/heart.png';
 import heartFilled from '../../images/icons/heart-filled.png';
 import { Link } from 'react-router-dom';
@@ -10,8 +10,9 @@ import Comments from './Comments';
 import { useDispatch, useSelector } from 'react-redux';
 import { commentOnPost, likePost, unlikePost } from '../../redux/actions/post';
 import { addSavedPost, removeSavedPost } from '../../redux/actions/savedposts';
+import { DateFormatter } from '../../utils/date-formatter';
 
-const Post = ({ post, onPostPage }) => {
+const Post = ({ post, onPostPage, disableInteraction, index }) => {
     const [comment, setComment] = useState('');
     const [active, setActive] = useState(false);
     const {
@@ -62,7 +63,11 @@ const Post = ({ post, onPostPage }) => {
     };
 
     return (
-        <div className='post'>
+        <div
+            className={`post bg-white ${
+                index % 3 === 2 && 'explore-main-post'
+            }`}
+        >
             {post && (
                 <>
                     <div className='post-headline'>
@@ -120,8 +125,11 @@ const Post = ({ post, onPostPage }) => {
                             </div>
                         )}
                     </div>
-                    <Link className='remove-link-style' to={`/p/${post._id}`}>
-                        <div className='post-content'>
+                    <div className='post-content'>
+                        <Link
+                            className='remove-link-style'
+                            to={`/p/${post._id}`}
+                        >
                             <div className='post-content-text'>
                                 <p>{post.text}</p>
                             </div>
@@ -130,8 +138,10 @@ const Post = ({ post, onPostPage }) => {
                                     <img src={post.img} alt='' />
                                 </div>
                             )}
-                        </div>
-                    </Link>
+                        </Link>
+                        <p className='post-date'>{DateFormatter(post.date)}</p>
+                    </div>
+
                     <div className='post-interaction'>
                         <div className='post-interaction-btns'>
                             <div>
@@ -190,28 +200,36 @@ const Post = ({ post, onPostPage }) => {
                                 </button>
                             )}
                         </div>
-                        <div className='post-interaction-comments'>
-                            <form
-                                className='comment-form'
-                                onSubmit={submitComment}
-                            >
-                                <input
-                                    type='text'
-                                    placeholder='   Add a comment...'
-                                    onChange={onChange}
-                                    name='comment'
-                                    value={comment}
-                                />
-                                <button
-                                    className='btn btn-primary'
-                                    type='submit'
-                                >
-                                    Post
-                                </button>
-                            </form>
-                        </div>
-                        {post.comments && (
-                            <Comments onPostPage={onPostPage} post={post} />
+                        {!disableInteraction && (
+                            <Fragment>
+                                <div className='post-interaction-comments'>
+                                    <form
+                                        className='comment-form'
+                                        onSubmit={submitComment}
+                                    >
+                                        <input
+                                            type='text'
+                                            className='comment-input'
+                                            placeholder='   Add a comment...'
+                                            onChange={onChange}
+                                            name='comment'
+                                            value={comment}
+                                        />
+                                        <button
+                                            className='btn btn-primary'
+                                            type='submit'
+                                        >
+                                            Post
+                                        </button>
+                                    </form>
+                                </div>
+                                {post.comments && (
+                                    <Comments
+                                        onPostPage={onPostPage}
+                                        post={post}
+                                    />
+                                )}
+                            </Fragment>
                         )}
                     </div>
                 </>

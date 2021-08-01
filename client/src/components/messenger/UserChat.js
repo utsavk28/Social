@@ -4,7 +4,7 @@ import './chat.css';
 
 const UserChat = ({ match, location }) => {
     return (
-        <div className='container-fluid d-flex mt-4'>
+        <div className='container-xl mt-4'>
             <Chat match={match} />
         </div>
     );

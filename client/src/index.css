@@ -22,6 +22,11 @@ code {
         monospace;
 }
 
+#root {
+    background-image: url('./images/doodle.png');
+}
+
+
 .main-container {
     min-height: 100vh;
 }

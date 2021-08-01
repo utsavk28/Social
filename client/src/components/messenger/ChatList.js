@@ -18,7 +18,7 @@ const ChatList = () => {
     }, [dispatch, conversation]);
 
     return (
-        <div className='cover-chat-container cover-chat-container-1'>
+        <div className='cover-chat-container cover-chat-container-1 bg-white'>
             <div className='cover-chat-container-header m-2'>
                 <h5>Chats</h5>
             </div>

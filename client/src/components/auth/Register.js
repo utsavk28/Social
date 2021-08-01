@@ -32,7 +32,7 @@ const Register = () => {
     return (
         <div className='auth-container'>
 
-            <form className='register-form m-4' onSubmit={submitForm}>
+            <form className='register-form p-4 bg-white' onSubmit={submitForm}>
                 <div className='mb-3'>
                     <label htmlFor='exampleInputEmail1' className='form-label'>
                         Email address

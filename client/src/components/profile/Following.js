@@ -5,23 +5,23 @@ import { getProfile } from '../../redux/actions/profile';
 import Loader from '../layout/Loader';
 import FollowList from './FollowList';
 import './profile.css';
+import { Redirect } from 'react-router-dom';
 
 const Following = ({ match }) => {
     const username = match.params.username;
     const dispatch = useDispatch();
-    const {
-        currProfile,
-        profile,
-        loading,
-    } = useSelector((state) => state.profile);
-
+    const { currProfile, profile, loading, error } = useSelector(
+        (state) => state.profile
+    );
 
     useEffect(() => {
         dispatch(getProfile(username));
     }, [dispatch, username]);
 
+    if (error) return <Redirect to='/404' />;
+
     return (
-        <div className='container-md mt-4'>
+        <div className='container-md mt-4 bg-white'>
             {loading || !profile || !currProfile ? (
                 <Loader />
             ) : (

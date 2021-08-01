@@ -15,7 +15,7 @@ const initialState = {
     conversation: null,
     message: null,
     messages: [],
-    error: {},
+    error: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,41 +25,55 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 conversation: payload,
+                error: null,
+
             };
         case GET_MESSAGES:
             return {
                 ...state,
                 messages: payload,
+                error: null,
+
             };
         case GET_USER_CONVERSATIONS:
             return {
                 ...state,
                 conversations: payload,
+                error: null,
+
             };
         case CREATE_CONVERSATION:
             return {
                 ...state,
                 conversation: payload,
+                error: null,
+
             };
         case MESSAGE_ERROR:
             return {
                 ...state,
                 error: 'Message Error',
+                loading: false,
             };
         case CONVERSATION_ERROR:
             return {
                 ...state,
+                loading: false,
                 error: 'Conversation Error',
             };
         case SEND_MESSAGE:
             return {
                 ...state,
                 message: payload,
+                error: null,
+
             };
         case ADD_MESSAGE:
             return {
                 ...state,
                 messages: [...state.messages, payload],
+                error: null,
+
             };
         default:
             return state;

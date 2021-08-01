@@ -17,7 +17,7 @@ const Navbar = ({ location }) => {
         profile: { currProfile },
     } = useSelector((state) => state);
     return (
-        <div className='bg-light'>
+        <div className='bg-light' style={{opacity:0.8}}>
             <nav className='navbar navbar-light'>
                 <div className='container-lg'>
                     <Link className='navbar-brand' to='/'>

@@ -44,6 +44,14 @@
     margin-left: 8px;
 }
 
+.chat-date {
+    margin: 2px 0 0 0;
+    padding: 0;
+    text-align: right;
+    font-size: 80%;
+    color: rgb(158, 158, 158);
+}
+
 #form {
     padding: 0.25rem;
     position: absolute;
@@ -77,6 +85,7 @@
 }
 
 #messages {
+    background-image: url('../../images/doodle.png');
     margin: 0;
     padding: 0;
     overflow: auto;
@@ -90,27 +99,59 @@
     width: 100%;
 }
 
+
 .message {
     margin: 8px;
     padding: 0.5rem 1.25rem;
     border: 0.5px solid rgb(207, 207, 207);
+    background: #fff;
     width: fit-content;
+    max-width: 75%;
     border-radius: 25px;
+}
+
+.message-text {
+    width: fit-content;
+    margin: 0 0 0 20px;
+    padding: 0;
+}
+
+
+.sender-message-text {
+    margin: 0;
+    padding: 0;    
+}
+
+.false-message-text {
+    margin: 0 20px 0 0;
+    padding: 0;    
+}
+
+
+.sender-chat-date {
+    margin: 0 0 0 20px;
+    padding: 0;
+}
+
+.false-chat-date {
+    margin: 0 0 0 20px;
+    padding: 0;
 }
 
 .sender {
     flex-direction: row-reverse;
-    background-color: #efefef;
+    background: #e1ffc7;
     right: 0;
 }
 
 .cover-chat-container-1 {
-    width: 50%;
+    max-width: 860px;
+    width: 100%;
     margin: auto;
 }
 
 .cover-chat-container-2 {
-    width: 75%;
+    max-width: 860px;
     margin: auto;
 }
 

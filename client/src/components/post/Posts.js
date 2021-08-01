@@ -12,10 +12,10 @@ const Posts = () => {
     return loading ? (
         <Loader />
     ) : (
-        <div>
+        <div className='bg-white' >
             {posts.map((pst) => {
                 return (
-                    <Post post={pst} key={pst._id} currProfile={currProfile} />
+                    <Post post={pst} key={pst._id} currProfile={currProfile} disableInteraction={false} />
                 );
             })}
         </div>

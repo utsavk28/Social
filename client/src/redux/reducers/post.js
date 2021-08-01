@@ -9,13 +9,14 @@ import {
     POST_POST,
     UNLIKE_POST,
     UPDATE_POST,
+    POST_ERROR,
 } from '../type';
 
 const initialState = {
     loading: true,
     post: {},
     posts: [],
-    error: {},
+    error: null,
 };
 
 var updatedPosts;
@@ -28,18 +29,21 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 post: payload,
                 loading: false,
+                error: null,
             };
         case GET_USERS_POSTS:
             return {
                 ...state,
                 posts: payload,
                 loading: false,
+                error: null,
             };
         case GET_POSTS:
             return {
                 ...state,
                 posts: payload,
                 loading: false,
+                error: null,
             };
         case POST_POST:
             return {
@@ -47,6 +51,7 @@ const reducer = (state = initialState, action) => {
                 post: payload,
                 posts: [payload, ...state.posts],
                 loading: false,
+                error: null,
             };
         case LIKE_POST:
         case UNLIKE_POST:
@@ -61,6 +66,7 @@ const reducer = (state = initialState, action) => {
                 post: payload,
                 posts: updatedPosts,
                 loading: false,
+                error: null,
             };
         case DELETE_POST:
             updatedPosts = state.posts.filter((post) => post._id !== payload);
@@ -68,7 +74,14 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 post: {},
                 posts: updatedPosts,
-                loading: true,
+                loading: false,
+                error: null,
+            };
+        case POST_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: 'Error',
             };
         default:
             return state;

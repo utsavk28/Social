@@ -29,8 +29,8 @@ const Login = () => {
     if (isAuthenticated) return <Redirect to='/' />;
 
     return (
-        <div className='auth-container'>
-            <form className='register-form m-4' onSubmit={submitForm}>
+        <div className='auth-container '>
+            <form className='register-form p-4 bg-white' onSubmit={submitForm}>
                 <div className='mb-3'>
                     <label htmlFor='exampleInputEmail1' className='form-label'>
                         Email address
