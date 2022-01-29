@@ -120,8 +120,8 @@ To get a local copy up and running follow these simple example steps.
 4. Enter your Mongo URI and JWT Secret Token in `server/config/default.json`
    ```JSON
    {
-		"mongoURI": "mongodb+srv://user:user@cluster10.uxypi.mongodb.net/test?retryWrites=true&w=majority",
-		"jwtSecret": "SecretToken"
+		"mongoURI": "mongodb+srv://user:pass@cluster10.uxypi.mongodb.net/test?retryWrites=true&w=majority",
+		"jwtSecret": "token"
 	}
    ```
 
